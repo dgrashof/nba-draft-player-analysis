@@ -1,6 +1,5 @@
 from py_ball import draft
 import pandas as pd
-import numpy as np
 import time
 
 HEADERS = {'Connection': 'keep-alive',
@@ -35,9 +34,10 @@ draft_history = draft.Draft(headers=HEADERS,
                             league_id=league_id,
                             season_year=i)
 draft_hist_df = pd.DataFrame(draft_history.data['DraftHistory'])
-draft_hist_df = draft_hist_df[draft_hist_df['SEASON'].astype('int64')>=2000]
+draft_hist_df = draft_hist_df[draft_hist_df['SEASON'].astype('int64')>=1990]
 draft_hist_df = draft_hist_df[draft_cols].rename(columns = {'PERSON_ID':'PLAYER_ID'})
 draft_hist_df.OVERALL_PICK = draft_hist_df.OVERALL_PICK.astype('int64')
+draft_hist_df.to_csv('C:/Users/David/OneDrive/Projects/nba-draft-player-analysis/data/draft_hist_df_revised.csv',index=False)
 draft_df = pd.merge(left=draft_hist_df,right=draft_df,how = 'outer',on = ['PLAYER_ID','SEASON'])
 draft_df['PLAYER_NAME'] = [x if len(x) > 3 else y for x,y in zip(draft_df['PLAYER_NAME_x'].astype(str),draft_df['PLAYER_NAME_y'].astype(str))]
 draft_df = draft_df.drop(columns = ['PLAYER_NAME_x','PLAYER_NAME_y'])

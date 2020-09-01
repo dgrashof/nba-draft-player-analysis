@@ -7,14 +7,14 @@ from fuzzywuzzy import process
 import os
 os.chdir('C:\\Users\\David\\OneDrive')
 
-season_min = 2000
+season_min = 1989
 season_max = 2020
 
 print('Downloading NBA DF',datetime.now().strftime("%d-%b-%Y [%H:%M:%S.%f]"))
 
 #load nba advanced stastics from basketball reference
 nba_df = pd.DataFrame()
-for year in range(season_min-1,season_max):
+for year in range(season_min,season_max):
     temp = pd.DataFrame(i for i in client.players_advanced_season_totals(season_end_year=year))
     temp['year'] = year
     nba_df = nba_df.append(temp)
@@ -60,11 +60,12 @@ Since I set an arbitrary starting season for for my dataset I run into the issue
 are wrongly labeled as being in their first season. Therefore, I want to remove all players who played in the first 
 season from all the seasons
 """
-exclude_list = [i for i in nba_df_final['name'][nba_df_final['year']==season_min-1]]
+exclude_list = [i for i in nba_df_final['name'][nba_df_final['year']==season_min]]
 nba_df_final = nba_df_final[~nba_df_final['name'].isin(exclude_list)]
+nba_df_final.to_csv('Projects/nba-draft-player-analysis/data/prelim_nba_df.csv')
 
-#load 
-college_lkup = pd.read_csv('Projects/nba-draft-player-analysis/data/draft_history_df.csv')
+#load college data
+college_lkup = pd.read_csv('Projects/nba-draft-player-analysis/data/draft_hist_df.csv',encoding='latin1')
 
 y = list(college_lkup['name'])
 x = list(nba_df['name'].drop_duplicates())
