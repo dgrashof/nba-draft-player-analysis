@@ -1,0 +1,9 @@
+yrs_played_1
+yrs_played_2
+yrs_played_3
+yrs_played_4
+yrs_played_5
+blocks_per_40
+usg_per_40
+personal_fouls_per_40
+height

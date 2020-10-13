@@ -1,0 +1,8 @@
+yrs_played_1
+yrs_played_2
+yrs_played_3
+yrs_played_4
+yrs_played_5
+rev_three_point_percentage
+three_point_attempts_per_40
+rev_free_throw_percentage
